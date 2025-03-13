@@ -65,9 +65,8 @@ class AdobeMobilePlugin: CDVPlugin {
         if((command.arguments[0] as? String) != nil) {
             let deviceToken = command.arguments[0] as? String ?? ""
             // We are sending this value in didRegisterForRemoteNotificationsWithDeviceToken in AppDelegate
-            // MobileCore.setPushIdentifier(deviceToken.data(using: .utf8))
-            MobileCore.setPushIdentifier(deviceToken)
-            
+            MobileCore.setPushIdentifier(deviceToken.data(using: .utf8))
+
             let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
             self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
         } else {
