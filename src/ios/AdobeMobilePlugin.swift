@@ -82,7 +82,7 @@ class AdobeMobilePlugin: CDVPlugin {
             if deviceTokenHex.isEmpty {
                 // Send nil to unregister the token from Adobe
                 MobileCore.setPushIdentifier(nil)
-                let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
+                let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "Sent nil value")
                 self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
                 return
             }
