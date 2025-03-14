@@ -79,10 +79,17 @@ class AdobeMobilePlugin: CDVPlugin {
     @objc(setPushIdentifier:)
     func setPushIdentifier(command: CDVInvokedUrlCommand) {
         if let deviceTokenHex = command.arguments[0] as? String {
+            if deviceTokenHex.isEmpty {
+                // Send nil to unregister the token from Adobe
+                MobileCore.setPushIdentifier(nil)
+                let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
+                self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
+                return
+            }
+    
             // Convert hex string back to Data
             if let deviceTokenData = hexStringToData(deviceTokenHex) {
                 MobileCore.setPushIdentifier(deviceTokenData)
-                
                 let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
                 self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
             } else {
