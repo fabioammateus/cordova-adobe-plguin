@@ -80,8 +80,9 @@ class AdobeMobilePlugin: CDVPlugin {
     func setPushIdentifier(command: CDVInvokedUrlCommand) {
         if let deviceTokenHex = command.arguments[0] as? String {
             if deviceTokenHex.lowercased() == "none" {
-                // Send "none" to unregister the token from Adobe
-                MobileCore.setPushIdentifier("none")
+                // Convert "none" string to Data and send it to unregister token in Adobe
+                let noneData = "none".data(using: .utf8)
+                MobileCore.setPushIdentifier(noneData)
                 let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
                 self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
                 return
